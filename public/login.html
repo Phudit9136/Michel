@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN | CLEAN UI</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    <div class="glow-overlay"></div>
+    
+    <div class="container">
+        <div class="login-card">
+            <div class="glitch-wrapper">
+                <h1 class="glitch" data-text="WELCOME BACK">WELCOME BACK</h1>
+            </div>
+            <div class="status-led">
+                <span class="led-red"></span>
+                <span class="led-text">SECURE CONNECTION ACTIVE</span>
+            </div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>👤 USERNAME / ID</label>
+                    <input type="text" id="username" placeholder="Enter your username or ID" required>
+                </div>
+                <div class="input-group">
+                    <label>🔒 PASSWORD / KEY</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+               
+                <p id="errorMsg" class="error-msg"></p>
+            </form>
+            <div class="security-badge">
+                <span>🛡️ SECURE • ENCRYPTED CONNECTION</span>
+            </div>
+        </div>
+    </div>
+    
+    <canvas id="matrixCanvas"></canvas>
+    <script src="/js/auth.js"></script>
+</body>
+</html>
