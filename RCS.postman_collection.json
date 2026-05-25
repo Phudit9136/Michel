@@ -1,0 +1,1086 @@
+{
+	"info": {
+		"_postman_id": "8385b8be-8a27-4c62-9005-92f447f6051e",
+		"name": "RCS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46713342",
+		"_collection_link": "https://oil-6370215.postman.co/workspace/OIL's-Workspace~b9a8b01b-9cd6-4fbe-8258-40b929b49cc2/collection/46713342-8385b8be-8a27-4c62-9005-92f447f6051e?action=share&source=collection_link&creator=46713342"
+	},
+	"item": [
+		{
+			"name": "Check-statusAGV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"mapCode\": \"XY\"  //Location-code\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8182/rcms-dps/rest/queryAgvStatus",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8182",
+					"path": [
+						"rcms-dps",
+						"rest",
+						"queryAgvStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChargeAGV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"robotCode\": \"1001\", //ID AMR\r\n  \"operator\": \"0\" // 0 ยกเลิก 1 ชาต\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/agvChargeTask",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"agvChargeTask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ExcludeAGV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"rmRobots\": [{\r\n    \"exclude\" : \"1\",  // 0 ยกเลิก 1 Ex\r\n    \"robotCode\" : \"1001\" //ID AMR\r\n  }]\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/excludeAgv",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"excludeAgv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LiftAGV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"robotCode\": \"1001\", //ID AMR\r\n  \"operator\": \"1\" // 1 ยก 2 ลด\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/agvAction",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"agvAction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "สั่งงานAGV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"taskTyp\": \"F011\",                // F011 TASKAGV\r\n  \"positionCodePath\": [{            \r\n    \"positionCode\": \"QU2\",          // จุด ต้นทาง\r\n    \"type\": \"00\"                    // 00 โลเค to โลเค 04 เเวเฮาร์ 05 CTU FMR QF\r\n  }, \r\n  { \r\n    \"positionCode\": \"QU7\",          // จุด ปลายทาง\r\n    \"type\": \"00\"                    // 00 โลเค to โลเค 04 เเวเฮาร์ 05 CTU FMR QF\r\n  }]\r\n//\"ctnrTyp\": \"1\"                    // Container type หรือ carton type\r\n//\"ctnrCode\": \"11\"                  // Container Code\r\n//\"podCode\": \"100001\"               // number rack\r\n//\"priority\": \"1\"                   // ความสำคัญคิวงาน เลขยิ่งเยอะยิ่งสำคัญ\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/genAgvSchedulingTask",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"genAgvSchedulingTask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"forceCancel\": \"0\",                   // 0 วางตรงที่ยกเลิก 1 จะวางพื้นที่arae\r\n  \"taskCode\": \"F01119D324C72D7156Y\"     // TASK NO\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/cancelTask",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"cancelTask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BindRACK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"podCode\": \"555555\",       // number rack\r\n  \"positionCode\": \"QU2\",     // พิกัด หรือ ชื่อจุด \r\n  \"podDir\": \"0\",             // 0 horizontal 1 vertical\r\n  \"indBind\": \"1\"             // 1 Bind 0 Unbind\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/bindPodAndBerth",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"bindPodAndBerth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BindCtnrRACK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"ctnrTyp\": \"1\",                       // Container type หรือ carton type\r\n  \"ctnrCode\": \"11\",                     // Container Code\r\n  \"stgBinCode\": \"10000199501013\",       // 0 horizontal 1 vertical\r\n  \"indBind\": \"1\"                        // 1 Bind 0 Unbind\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/bindCtnrAndBin",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"bindCtnrAndBin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LockPosition",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"positionCode\": \"QU2\",     // พิกัด หรือ ชื่อจุด\r\n  \"indBind\": \"1\"             // 1 Bind 0 Unbind\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/lockPosition",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"lockPosition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PauseAGV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"robotCount\": \"2\",                    // จำนวน AMR  ถ้าจะ pause all ให้ใส่ -1  เเละต้องเปิด mapShortName\r\n  \"robots\": [                         \r\n    \"1001\",                             // number AMR\r\n    \"1002\" \r\n  ]\r\n  //\"mapShortName\": \"7-Eleven\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/stopRobot",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"stopRobot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ContinueAGV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"robotCount\": \"2\",                    // จำนวน AMR  ถ้าจะ pause all ให้ใส่ -1  เเละต้องเปิด mapShortName\r\n  \"robots\": [                         \r\n    \"1001\",                             // number AMR\r\n    \"1002\" \r\n  ]\r\n  //\"mapShortName\": \"7-Eleven\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/resumeRobot",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"resumeRobot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "blockArea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"matterArea\": \"55\",      // WH area type\r\n  \"indBind\": \"1\"           // 1 Bind 0 Unbind\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/blockArea",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"blockArea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CheckRACK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"positionCode\": \"QU2\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/queryPodBerthAndMat",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"queryPodBerthAndMat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "callback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"positionCode\": \"QU2\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/queryPodBerthAndMat",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"queryPodBerthAndMat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "สั่งงานAGV11",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"taskTyp\": \"F011\",                // F011 TASKAGV\r\n  \"positionCodePath\": [{            \r\n    \"positionCode\": \"QU1\",          // จุด ต้นทาง\r\n    \"type\": \"00\"                    // 00 โลเค to โลเค 04 เเวเฮาร์ 05 CTU FMR QF\r\n  }, \r\n  { \r\n    \"positionCode\": \"QU3\",          // จุด ปลายทาง\r\n    \"type\": \"00\"                    // 00 โลเค to โลเค 04 เเวเฮาร์ 05 CTU FMR QF\r\n  }]\r\n//\"ctnrTyp\": \"1\"                    // Container type หรือ carton type\r\n//\"ctnrCode\": \"11\"                  // Container Code\r\n//\"podCode\": \"100001\"               // number rack\r\n//\"priority\": \"1\"                   // ความสำคัญคิวงาน เลขยิ่งเยอะยิ่งสำคัญ\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/genAgvSchedulingTask",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"genAgvSchedulingTask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "continue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n  \"userCallCode\": \"125883AO114600\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.201:8181/rcms/services/rest/hikRpcService/continueTask",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"201"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"continueTask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "checkrack",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// สร้าง reqCode รูปแบบ: ตัวเลข + ตัวอักษร + ตัวเลข\r",
+							"const prefix = Math.floor(Math.random() * 10000000); // 7 digits\r",
+							"const middle = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z\r",
+							"const suffix = Math.floor(Math.random() * 100000); // 5 digits\r",
+							"const reqCode = `${prefix}${middle}${suffix}`;\r",
+							"\r",
+							"pm.environment.set(\"reqCode\", reqCode);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"reqCode\": \"{{reqCode}}\", \r\n   \"mapShortName\": \"BIG-C\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.127:8181/rcms/services/rest/hikRpcService/queryPodBerthAndMat",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"127"
+					],
+					"port": "8181",
+					"path": [
+						"rcms",
+						"services",
+						"rest",
+						"hikRpcService",
+						"queryPodBerthAndMat"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
